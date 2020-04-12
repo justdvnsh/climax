@@ -14,7 +14,7 @@ class _CityScreenState extends State<CityScreen> {
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/city.jpg"),
+              image: AssetImage("images/bg.jpg"),
               fit: BoxFit.cover
           ),
         ),
@@ -34,6 +34,43 @@ class _CityScreenState extends State<CityScreen> {
                       size: 38.0,
                       color: Colors.black,
                     ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(20.0),
+                child: TextField(
+                  style: TextStyle(
+                    color: Colors.black
+                  ),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: "Enter City Name",
+                    hintStyle: TextStyle(
+                      color: Colors.grey
+                    ),
+                    icon: Icon(
+                      CupertinoIcons.create_solid,
+                      color: Colors.black,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide.none
+                    ),
+                  ),
+                ),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Get Weather",
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.black
                   ),
                 ),
               ),
