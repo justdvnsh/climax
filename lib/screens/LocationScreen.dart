@@ -1,6 +1,7 @@
 import 'package:climax/helper/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'CityScreen.dart';
 
 class LocationScreen extends StatefulWidget {
 
@@ -72,7 +73,9 @@ class _LocationScreenState extends State<LocationScreen> {
                             color: this.color
                         ),
                         onPressed: () {
-//                    getLocation();
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return CityScreen();
+                          }));
                         },
                       ),
                     ),
