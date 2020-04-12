@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:climax/networking/location.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -10,8 +10,18 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
 
   void getLocation() async {
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-    print(position);
+    Location location = new Location();
+    await location.getCurrentLocation();
+    print(location.latitude);
+    print(location.longitude);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getLocation();
   }
 
   @override
@@ -25,34 +35,20 @@ class _LoadingScreenState extends State<LoadingScreen> {
           ),
         ),
         child: SafeArea(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  icon: Icon(
-                    CupertinoIcons.pen,
-                    size: 50.0,
-                  ),
-                  onPressed: () {
-                    getLocation();
-                  },
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  CupertinoIcons.location_solid,
+                  size: 50.0,
                 ),
+                onPressed: () {
+//                    getLocation();
+                },
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: Icon(
-                    CupertinoIcons.location_solid,
-                    size: 50.0,
-                  ),
-                  onPressed: () {
-                    getLocation();
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
