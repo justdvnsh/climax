@@ -23,6 +23,23 @@ class _LocationScreenState extends State<LocationScreen> {
   String text;
   Color color;
 
+  void updateUI(dynamic data) {
+    setState(() {
+      int temperature = data['main']['temp'].toInt();
+      temp = temperature.toString();
+      city = data['name'].toString();
+      description = data['weather'][0]['main'].toString();
+
+      print(temp);
+      print(city);
+      print(description);
+
+      image = weatherModel.getImageAndText(temperature)['image'];
+      text = weatherModel.getImageAndText(temperature)['text'];
+      color = weatherModel.getImageAndText(temperature)['color'];
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -30,18 +47,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
     var data = widget.weatherData;
 
-    int temperature = data['main']['temp'];
-    temp = temperature.toString();
-    city = data['name'].toString();
-    description = data['weather'][0]['main'].toString();
-
-    print(temp);
-    print(city);
-    print(description);
-
-    image = weatherModel.getImageAndText(temperature)['image'];
-    text = weatherModel.getImageAndText(temperature)['text'];
-    color = weatherModel.getImageAndText(temperature)['color'];
+    updateUI(data);
   }
 
   @override
@@ -72,10 +78,15 @@ class _LocationScreenState extends State<LocationScreen> {
                             size: 50.0,
                             color: this.color
                         ),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                        onPressed: () async {
+                          var typedCityName = await Navigator.push(context, MaterialPageRoute(builder: (context){
                             return CityScreen();
                           }));
+
+                          if (typedCityName != null) {
+                            var data = await weatherModel.getCityWeather(typedCityName);
+                            updateUI(data);
+                          }
                         },
                       ),
                     ),
